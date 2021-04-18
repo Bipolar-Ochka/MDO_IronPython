@@ -27,9 +27,12 @@ namespace MDO_IronPython
                 pySrc = reader.ReadToEnd();
             }
             ModMethod.engine = Python.CreateEngine();
+            
+            engine.SetSearchPaths(new string[] {$"{Environment.CurrentDirectory}" });
             var x = ModMethod.engine.CreateScriptSourceFromString(pySrc);
             ModMethod.methodSource = x;
             ModMethod.methodScope = x.Engine.CreateScope();
+            x.Engine.SetSearchPaths(new string[] { $"{Environment.CurrentDirectory}" });
             x.Execute(ModMethod.methodScope);
         }
         private static (dynamic OptimizingFunction, dynamic lipzitsFunction) getFunctionsVariables(string optFuncPyCode,string funcName, string lipFuncPyCode,string lipFuncName)
@@ -39,7 +42,8 @@ namespace MDO_IronPython
 
             var lipFuncScriptSource = ModMethod.engine.CreateScriptSourceFromString(optFuncPyCode);
             var lipFuncScope = lipFuncScriptSource.Engine.CreateScope();
-
+            optFuncScriptSource.Engine.SetSearchPaths(new string[] { $"{Environment.CurrentDirectory}" });
+            lipFuncScriptSource.Engine.SetSearchPaths(new string[] { $"{Environment.CurrentDirectory}" });
             optFuncScriptSource.Execute(optFuncScope);
             lipFuncScriptSource.Execute(lipFuncScope);
 

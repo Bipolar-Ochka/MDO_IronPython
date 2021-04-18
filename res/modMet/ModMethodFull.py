@@ -38,6 +38,12 @@ def solve(optimizingFunc, lipzitsFunc, precision, epsilon, lower, upper, ruleSub
         ruleSubList = Rule(ruleSubList)
     if(isinstance(ruleMainList,int)):
         ruleMainList = Rule(ruleMainList)
+    precision = Decimal(precision)
+    epsilon = Decimal(epsilon)
+    for i in range(len(lower)):
+        lower[i] = Decimal(lower[i])
+    for i in range(len(upper)):
+        upper[i] = Decimal(upper[i])
     lipzitsConst = lipzitsFunc(epsilon)
     rectanglePool = deque()
     firstRectangle = ModRectangle(lower, upper)
